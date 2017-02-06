@@ -1,0 +1,62 @@
+﻿@{
+    Layout = "";
+}
+@model ConfigurationModel
+@using Nop.Plugin.Payments.Weixin.Models;
+@using Nop.Web.Framework;
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <table class="adminContent">
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AppId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AppId)
+                @Html.ValidationMessageFor(model => model.AppId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AppSecret):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AppSecret)
+                @Html.ValidationMessageFor(model => model.AppSecret)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MchId):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.MchId)
+                @Html.ValidationMessageFor(model => model.MchId)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.MchKey):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.MchKey)
+                @Html.ValidationMessageFor(model => model.MchKey)
+            </td>
+        </tr>
+        <tr>
+            <td class="adminTitle">
+                @Html.NopLabelFor(model => model.AdditionalFee):
+            </td>
+            <td class="adminData">
+                @Html.EditorFor(model => model.AdditionalFee)
+                @Html.ValidationMessageFor(model => model.AdditionalFee)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" name="save" class="k-button" value="@T("Admin.Common.Save")" />
+            </td>
+        </tr>
+    </table>
+}

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Payments.Weixin.Models.PrepayInfoModel
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+
+
+<h1 style="margin-top: 50px; margin-left:auto;margin-right:auto;font-size:1.5rem;color:#666;">正在启动微信支付....</h1>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        function onBridgeReady() {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": "@Html.Raw(Model.AppId)",     //公众号名称，由商户传入
+                    "timeStamp": "@Html.Raw(Model.TimeStamp)",         //时间戳，自1970年以来的秒数
+                    "nonceStr": "@Html.Raw(Model.NonceStr)", //随机串
+                    "package": "@Html.Raw(Model.Package)",
+                    "signType": "@Html.Raw(Model.SignType)",         //微信签名方式：
+                    "paySign": "@Html.Raw(Model.PaySign)" //微信签名
+                },
+                function (res) {
+                    // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                    window.location = "@Url.RouteUrl("Plugin.Payments.Weixin.CheckPaymentResult", new { orderId = Model.OrderId })";
+                }
+            );
+        }
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            onBridgeReady();
+        }
+    });
+</script>

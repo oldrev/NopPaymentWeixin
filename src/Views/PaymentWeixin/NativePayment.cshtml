@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "";
+}
+@model Nop.Plugin.Payments.Weixin.Models.PrepayInfoModel
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Plugins/Payments.Weixin/Scripts/qrcode.min.js")"></script>
+
+<div style="width:100%; height:100%; background:#666;">
+
+    <div style="margin: auto auto">
+        <div>
+            <h1>请使用微信扫描下面的二维码以便完成支付</h1>
+            <div id="qrcode" style="width:96px; height:96px;">
+            </div>
+        </div>
+        <div style="height: 25px">
+            <a href="@Url.Content("~/OrderDetails/" + Model.OrderId.ToString())">已完成付款</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var qrcode = new QRCode("qrcode");
+        var url = "@Html.Raw(Model.WeixinNativePaymentUrl)";
+        qrcode.makeCode(url);
+    });
+
+</script>
